@@ -2,7 +2,7 @@
 
 ## Installation
 
-0. If you haven't installed BepInEx yet, follow the [instructions](https://bepinex.github.io/bepinex_docs/master/articles/user_guide/installation/index.html) to install it.
+0. If you haven't installed [BepInEx](https://bepinex.github.io/bepinex_docs/master/index.html) yet, follow the [instructions](https://bepinex.github.io/bepinex_docs/master/articles/user_guide/installation/index.html) to install it. BepInEx will become the standard for Craftopia modding.
 1. Download binary from [releases](https://github.com/eai04191/craftopia-rpc/releases).
 2. Put `craftopia-rpc.dll` into `Craftopia\BepInEx\plugins`
 3. Download `discord-rpc-win.zip` from [discord-rps/releases](https://github.com/discord/discord-rpc/releases)
