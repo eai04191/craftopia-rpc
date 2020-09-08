@@ -1,1 +1,20 @@
-craftopia-rpc
+# Discord Rich Presence for Craftopia
+
+## Installation
+
+0. If you haven't installed BepInEx yet, follow the [instructions](https://bepinex.github.io/bepinex_docs/master/articles/user_guide/installation/index.html) to install it.
+1. Download binary from [releases](https://github.com/eai04191/craftopia-rpc/releases).
+2. Put `craftopia-rpc.dll` into `Craftopia\BepInEx\plugins`
+3. Download `discord-rpc-win.zip` from [discord-rps/releases](https://github.com/discord/discord-rpc/releases)
+4. Put `discord-rpc\win64-dynamic\bin\discord-rpc.dll` into `Craftopia\Craftopia_Data\Plugins`
+5. Rename `discord-rpc.dll` to `0discord-rpc.dll`.
+
+## Usage
+
+Play Craftopia, That's all.
+
+## License
+
+MIT License
+
+Most of the code was copied from [Weilbyte/RWRichPresence](https://github.com/Weilbyte/RWRichPresence), licensed under the MIT license. I'd like to take this opportunity to thank you for Weilbyte.
