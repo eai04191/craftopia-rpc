@@ -1,5 +1,6 @@
 ﻿using System;
 using BepInEx;
+using Oc;
 
 namespace CraftopiaRPC
 {
@@ -11,6 +12,7 @@ namespace CraftopiaRPC
 
         void Awake()
         {
+            
             Logger.LogInfo("Hello, world!");
             DiscordRPC.EventHandlers eventHandlers = default(DiscordRPC.EventHandlers);
             eventHandlers.readyCallback = (DiscordRPC.ReadyCallback)Delegate.Combine(eventHandlers.readyCallback, new DiscordRPC.ReadyCallback(ReadyCallback));
