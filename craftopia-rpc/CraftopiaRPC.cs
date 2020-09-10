@@ -10,12 +10,16 @@ namespace CraftopiaRPC
     public class CraftopiaRPC : BaseUnityPlugin
     {
         internal static DiscordRPC.RichPresence prsnc;
+        private State CurrentState;
+        private State PreviousState;
+        private long PreviousStateTimestamp;
         private float SendInterval;
         private float CoolDown;
 
         void Awake()
         {
-            SendInterval = 2;
+            // Check currrent state every 10 seconds.
+            SendInterval = 10;
             CoolDown = SendInterval;
 
             DiscordRPC.EventHandlers eventHandlers = default;
@@ -25,21 +29,18 @@ namespace CraftopiaRPC
 
             DiscordRPC.Initialize("752972693745172550", ref eventHandlers, true, "0612");
             prsnc = default;
-            prsnc.largeImageKey = "logo";
-            prsnc.largeImageText = "Craftopia by POCKET PAIR, Inc.";
-            prsnc.state = "Main Menu";
-            DiscordRPC.UpdatePresence(ref prsnc);
+            SetStatus();
             ReadyCallback();
         }
 
         private static void ErrorCallback(int errorCode, string message)
         {
-            UnityEngine.Debug.Log("ErrorCallback: " + errorCode + " " + message);
+            UnityEngine.Debug.Log($"ErrorCallback: {errorCode}: {message}");
         }
 
         private static void DisconnectedCallback(int errorCode, string message)
         {
-            UnityEngine.Debug.Log("DisconnectedCallback: " + errorCode + " " + message);
+            UnityEngine.Debug.Log($"DisconnectedCallback: {errorCode}: {message}");
         }
 
         private static void ReadyCallback()
@@ -53,17 +54,64 @@ namespace CraftopiaRPC
                 CoolDown -= Time.deltaTime;
             else {
                 CoolDown = SendInterval;
-                SendStatus();
+                CheckStatus();
             }
         }
-        void SendStatus()
+
+        void CheckStatus()
         {
-            if (OcGameMng.Inst) {
-                State CurrentState = new State();
-                Logger.LogInfo($"{CurrentState.PlayerName} Lv.{CurrentState.PlayerLevel} {CurrentState.FieldState} 島Lv.{CurrentState.MapLevel} {CurrentState.PlayState}");
-            } else {
+            if (!OcGameMng.Inst) {
                 Logger.LogInfo("Not in Game");
+                SetStatus();
             }
+
+            CurrentState = new State();
+            if (!CurrentState.IsSameState(PreviousState)) {
+                Logger.LogInfo("State has Changed!");
+                Logger.LogInfo($"{CurrentState.PlayerName} Lv.{CurrentState.PlayerLevel} {CurrentState.FieldState} Map Lv.{CurrentState.MapLevel} ID:{CurrentState.MapID} {CurrentState.PlayState} ({CurrentState.PlayerCount} / {CurrentState.PlayerCountMax})");
+                SetStatus(CurrentState);
+                PreviousState = CurrentState.Clone();
+            } else {
+                Logger.LogInfo("State is not Change. Keep Going!");
+            }
+        }
+
+        void SetStatus(State State)
+        {
+            long Timestamp = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
+            if (State.IsSameStateExceptPlayerCount(PreviousState)) {
+                Logger.LogInfo("Only the number of PlayerCount. Use previous Timestamp.");
+                Timestamp = PreviousStateTimestamp;
+            }
+            Logger.LogInfo(Timestamp);
+
+            prsnc.state = $"Playing {State.PlayState}";
+            prsnc.details = $"{State.PlayerName} Lv.{State.PlayerLevel} in Lv.{State.MapLevel} island.";
+            prsnc.startTimestamp = Timestamp;
+            prsnc.largeImageKey = State.isDungeon ? State.isCombatDungeon ? "dungeon2" : "dungeon1" : "overworld";
+            prsnc.largeImageText = State.FieldState;
+            prsnc.smallImageKey = "logo";
+            prsnc.smallImageText = "Craftopia by POCKET PAIR, Inc.";
+            if (State.PlayState != "Solo") {
+                prsnc.partySize = State.PlayerCount;
+                prsnc.partyMax = State.PlayerCountMax;
+            }
+            DiscordRPC.UpdatePresence(ref prsnc);
+            PreviousStateTimestamp = Timestamp;
+        }
+
+        void SetStatus()
+        {
+            prsnc.state = "Main Menu";
+            prsnc.details = null;
+            prsnc.startTimestamp = 0;
+            prsnc.largeImageKey = "logo_big";
+            prsnc.largeImageText = "Craftopia by POCKET PAIR, Inc.";
+            prsnc.smallImageKey = null;
+            prsnc.smallImageText = null;
+            prsnc.partySize = 0;
+            prsnc.partyMax = 0;
+            DiscordRPC.UpdatePresence(ref prsnc);
         }
 
     }
