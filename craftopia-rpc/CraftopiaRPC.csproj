@@ -15,6 +15,10 @@
       <HintPath>..\Libs\BepInEx.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UniRx">
+      <HintPath>..\Libs\UniRx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
     <Reference Include="UnityEngine">
       <HintPath>..\Libs\UnityEngine.dll</HintPath>
       <Private>false</Private>

@@ -17,7 +17,7 @@ Play Craftopia, That's all.
 
 I am building using Visual Studio 2019.
 
-1. Copy `Assembly-CSharp.dll`, `UnityEngine.dll` and `UnityEngine.CoreModule.dll` from `Craftopia\Craftopia_Data\Managed` to `./Libs`.
+1. Copy `Assembly-CSharp.dll`, `UnityEngine.dll`, `UnityEngine.CoreModule.dll` and `UniRx.dll` from `Craftopia\Craftopia_Data\Managed` to `./Libs`.
 2. Copy `BepInEx.dll` from `Craftopia\BepInEx\core` to `./Libs`.
 3. Now you should be able to build.
 
