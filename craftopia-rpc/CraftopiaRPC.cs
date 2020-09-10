@@ -1,10 +1,7 @@
 ﻿using System;
 using BepInEx;
 using Oc;
-using Oc.Maps;
-using Oc.Dungeon;
 using UnityEngine;
-using UniRx;
 
 namespace CraftopiaRPC
 {
@@ -62,24 +59,8 @@ namespace CraftopiaRPC
         void SendStatus()
         {
             if (OcGameMng.Inst) {
-                OcServerState ServerState = SingletonMonoBehaviour<OcNetMng>.Inst.ServerState;
-                bool IsHost = SingletonMonoBehaviour<OcNetMng>.Inst.IsHost;
-                int PlayerCountMax = OcNetMng.MAX_PLAYER_NUM;
-                int PlayerCount = SingletonMonoBehaviour<OcNetMng>.Inst.ConnectPlayerNum;
-                string PlayState = ServerState == OcServerState.Run ? IsHost
-                    ? $"Multiplayer (Host) ({PlayerCount}/{PlayerCountMax})"
-                    : $"Multiplayer (Guest) ({PlayerCount}/{PlayerCountMax})"
-                    : "Solo";
-
-                int DungeonID = OcPlMaster.Inst.CurrentDungeonId;
-                OcDungeonSo Dungeon = SingletonMonoBehaviour<OcDungeonManager>.Inst.GetDungeonData(DungeonID);
-                string DungeonName = Dungeon.DungeonName;
-                string FieldState = DungeonID == -1 ? "in Overworld" : $"in Dungeon ({DungeonName})";
-
-                string PlayerName = SingletonMonoBehaviour<OcPlCharacterManager>.Inst.SelectedCharaMakeData.Name;
-                int PlayerLevel = OcPlMaster.Inst.PlLevelCtrl.Level.Value;
-                int MapLevel = SingletonMonoBehaviour<OcWorldManager>.Inst.WorldLevel_Map;
-                Logger.LogInfo($"{PlayerName} Lv.{PlayerLevel} {FieldState} 島Lv.{MapLevel} {PlayState}");
+                State CurrentState = new State();
+                Logger.LogInfo($"{CurrentState.PlayerName} Lv.{CurrentState.PlayerLevel} {CurrentState.FieldState} 島Lv.{CurrentState.MapLevel} {CurrentState.PlayState}");
             } else {
                 Logger.LogInfo("Not in Game");
             }
