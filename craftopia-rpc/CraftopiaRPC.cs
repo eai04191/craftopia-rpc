@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BepInEx;
 using Oc;
 
@@ -13,8 +13,7 @@ namespace CraftopiaRPC
         void Awake()
         {
             
-            Logger.LogInfo("Hello, world!");
-            DiscordRPC.EventHandlers eventHandlers = default(DiscordRPC.EventHandlers);
+            DiscordRPC.EventHandlers eventHandlers = default;
             eventHandlers.readyCallback = (DiscordRPC.ReadyCallback)Delegate.Combine(eventHandlers.readyCallback, new DiscordRPC.ReadyCallback(ReadyCallback));
             eventHandlers.disconnectedCallback = (DiscordRPC.DisconnectedCallback)Delegate.Combine(eventHandlers.disconnectedCallback, new DiscordRPC.DisconnectedCallback(DisconnectedCallback));
             eventHandlers.errorCallback = (DiscordRPC.ErrorCallback)Delegate.Combine(eventHandlers.errorCallback, new DiscordRPC.ErrorCallback(ErrorCallback));
@@ -22,11 +21,11 @@ namespace CraftopiaRPC
             eventHandlers.spectateCallback = (DiscordRPC.SpectateCallback)Delegate.Combine(eventHandlers.spectateCallback, new DiscordRPC.SpectateCallback(SpectateCallback));
             eventHandlers.requestCallback = (DiscordRPC.RequestCallback)Delegate.Combine(eventHandlers.requestCallback, new DiscordRPC.RequestCallback(RequestCallback));
             DiscordRPC.Initialize("752972693745172550", ref eventHandlers, true, "0612");
-            prsnc = default(DiscordRPC.RichPresence);
+            prsnc = default;
             prsnc.largeImageKey = "logo";
             prsnc.largeImageText = "Craftopia by POCKET PAIR, Inc.";
             prsnc.state = "Main Menu";
-            DiscordRPC.UpdatePresence(ref CraftopiaRPC.prsnc);
+            DiscordRPC.UpdatePresence(ref prsnc);
             ReadyCallback();
         }
         private static void RequestCallback(DiscordRPC.JoinRequest request)

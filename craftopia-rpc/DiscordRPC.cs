@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace CraftopiaRPC
@@ -24,16 +22,16 @@ namespace CraftopiaRPC
         public delegate void SpectateCallback(string secret);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void RequestCallback(DiscordRPC.JoinRequest request);
+        public delegate void RequestCallback(JoinRequest request);
 
         public struct EventHandlers
         {
-            public DiscordRPC.ReadyCallback readyCallback;
-            public DiscordRPC.DisconnectedCallback disconnectedCallback;
-            public DiscordRPC.ErrorCallback errorCallback;
-            public DiscordRPC.JoinCallback joinCallback;
-            public DiscordRPC.SpectateCallback spectateCallback;
-            public DiscordRPC.RequestCallback requestCallback;
+            public ReadyCallback readyCallback;
+            public DisconnectedCallback disconnectedCallback;
+            public ErrorCallback errorCallback;
+            public JoinCallback joinCallback;
+            public SpectateCallback spectateCallback;
+            public RequestCallback requestCallback;
         }
 
         [Serializable]
@@ -72,7 +70,7 @@ namespace CraftopiaRPC
         }
 
         [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Initialize")]
-        public static extern void Initialize(string applicationId, ref DiscordRPC.EventHandlers handlers, bool autoRegister, string optionalSteamId);
+        public static extern void Initialize(string applicationId, ref EventHandlers handlers, bool autoRegister, string optionalSteamId);
 
         [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Shutdown")]
         public static extern void Shutdown();
@@ -81,9 +79,9 @@ namespace CraftopiaRPC
         public static extern void RunCallbacks();
 
         [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_UpdatePresence")]
-        public static extern void UpdatePresence(ref DiscordRPC.RichPresence presence);
+        public static extern void UpdatePresence(ref RichPresence presence);
 
         [DllImport("0discord-rpc", CallingConvention = CallingConvention.Cdecl, EntryPoint = "Discord_Respond")]
-        public static extern void Respond(string userId, DiscordRPC.Reply reply);
+        public static extern void Respond(string userId, Reply reply);
     }
 }
