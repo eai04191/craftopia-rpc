@@ -81,10 +81,9 @@ namespace CraftopiaRPC
         {
             long Timestamp = new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds();
             if (State.IsSameStateExceptPlayerCount(PreviousState)) {
-                Logger.LogInfo("Only the number of PlayerCount. Use previous Timestamp.");
+                Logger.LogInfo("Only PlayerCount has Changed. Use the previous timestamp.");
                 Timestamp = PreviousStateTimestamp;
             }
-            Logger.LogInfo(Timestamp);
 
             prsnc.state = $"Playing {State.PlayState}";
             prsnc.details = $"{State.PlayerName} Lv.{State.PlayerLevel} in Lv.{State.MapLevel} island";
