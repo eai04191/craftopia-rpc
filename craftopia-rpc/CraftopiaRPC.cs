@@ -18,8 +18,8 @@ namespace CraftopiaRPC
 
         void Awake()
         {
-            // Check currrent state every 10 seconds.
-            SendInterval = 10;
+            // Check currrent state every 5 seconds.
+            SendInterval = 5;
             CoolDown = SendInterval;
 
             DiscordRPC.EventHandlers eventHandlers = default;
@@ -63,6 +63,7 @@ namespace CraftopiaRPC
             if (!OcGameMng.Inst) {
                 Logger.LogInfo("Not in Game");
                 SetStatus();
+                return;
             }
 
             CurrentState = new State();
@@ -86,9 +87,9 @@ namespace CraftopiaRPC
             Logger.LogInfo(Timestamp);
 
             prsnc.state = $"Playing {State.PlayState}";
-            prsnc.details = $"{State.PlayerName} Lv.{State.PlayerLevel} in Lv.{State.MapLevel} island.";
+            prsnc.details = $"{State.PlayerName} Lv.{State.PlayerLevel} in Lv.{State.MapLevel} island";
             prsnc.startTimestamp = Timestamp;
-            prsnc.largeImageKey = State.isDungeon ? State.isCombatDungeon ? "dungeon2" : "dungeon1" : "overworld";
+            prsnc.largeImageKey = State.IsDungeon ? State.IsCombatDungeon ? "dungeon2" : "dungeon1" : "overworld";
             prsnc.largeImageText = State.FieldState;
             prsnc.smallImageKey = "logo";
             prsnc.smallImageText = "Craftopia by POCKET PAIR, Inc.";
@@ -100,7 +101,7 @@ namespace CraftopiaRPC
             PreviousStateTimestamp = Timestamp;
         }
 
-        void SetStatus()
+        static void SetStatus()
         {
             prsnc.state = "Main Menu";
             prsnc.details = null;

@@ -10,21 +10,16 @@ namespace CraftopiaRPC
         private bool IsHost;
         public int PlayerCountMax;
         public int PlayerCount;
-        public string PlayState => ServerState == OcServerState.Run ? IsHost
-                    ? $"Multiplayer (Host)"
-                    : $"Multiplayer (Guest)"
-                    : "Solo";
+        public string PlayState;
         private int DungeonID;
-        public bool isDungeon => DungeonID == -1 ? false : true;
-        public bool isCombatDungeon;
-        public string FieldState => isDungeon
-                    ? $"in {SingletonMonoBehaviour<OcDungeonManager>.Inst.GetDungeonData(DungeonID).DungeonName}"
-                    : "in Overworld";
+        public bool IsDungeon;
+        private OcDungeonSo DungeonData;
+        public bool IsCombatDungeon;
+        public string FieldState;
         public string PlayerName;
         public int PlayerLevel;
         public int MapID;
         public int MapLevel;
-
 
         public State()
         {
@@ -32,8 +27,17 @@ namespace CraftopiaRPC
             IsHost = SingletonMonoBehaviour<OcNetMng>.Inst.IsHost;
             PlayerCountMax = OcNetMng.MAX_PLAYER_NUM;
             PlayerCount = SingletonMonoBehaviour<OcNetMng>.Inst.ConnectPlayerNum;
+            PlayState = ServerState == OcServerState.Run ? IsHost
+                ? "Multiplayer as Host"
+                : "Multiplayer as Guest"
+                : "Solo";
             DungeonID = OcPlMaster.Inst.CurrentDungeonId;
-            isCombatDungeon = (bool)(SingletonMonoBehaviour<OcDungeonManager>.Inst.GetDungeonData(DungeonID)?.isCombatDungeon);
+            IsDungeon = DungeonID != -1;
+            DungeonData = SingletonMonoBehaviour<OcDungeonManager>.Inst.GetDungeonData(DungeonID);
+            IsCombatDungeon = IsDungeon ? DungeonData.isCombatDungeon : false;
+            FieldState = IsDungeon
+                ? SingletonMonoBehaviour<OcDungeonManager>.Inst.GetDungeonData(DungeonID).DungeonName
+                : "Overworld";
             PlayerName = SingletonMonoBehaviour<OcPlCharacterManager>.Inst.SelectedCharaMakeData.Name;
             PlayerLevel = OcPlMaster.Inst.PlLevelCtrl.Level.Value;
             MapID = SingletonMonoBehaviour<OcWorldManager>.Inst.CurrentIsland.ID;
@@ -49,8 +53,9 @@ namespace CraftopiaRPC
                    PlayerCount == state.PlayerCount &&
                    PlayState == state.PlayState &&
                    DungeonID == state.DungeonID &&
-                   isDungeon == state.isDungeon &&
-                   isCombatDungeon == state.isCombatDungeon &&
+                   IsDungeon == state.IsDungeon &&
+                   DungeonData == state.DungeonData &&
+                   IsCombatDungeon == state.IsCombatDungeon &&
                    FieldState == state.FieldState &&
                    PlayerName == state.PlayerName &&
                    PlayerLevel == state.PlayerLevel &&
@@ -66,8 +71,9 @@ namespace CraftopiaRPC
                    //PlayerCount == state.PlayerCount &&
                    PlayState == state.PlayState &&
                    DungeonID == state.DungeonID &&
-                   isDungeon == state.isDungeon &&
-                   isCombatDungeon == state.isCombatDungeon &&
+                   IsDungeon == state.IsDungeon &&
+                   DungeonData == state.DungeonData &&
+                   IsCombatDungeon == state.IsCombatDungeon &&
                    FieldState == state.FieldState &&
                    PlayerName == state.PlayerName &&
                    PlayerLevel == state.PlayerLevel &&
