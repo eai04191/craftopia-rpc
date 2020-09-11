@@ -1,4 +1,4 @@
-﻿using Oc;
+using Oc;
 using Oc.Maps;
 using Oc.Dungeon;
 
