@@ -13,14 +13,14 @@ namespace CraftopiaRPC
         private State CurrentState;
         private State PreviousState;
         private long PreviousStateTimestamp;
-        private float SendInterval;
+        private float CheckInterval;
         private float CoolDown;
 
         void Awake()
         {
             // Check currrent state every 5 seconds.
-            SendInterval = 5;
-            CoolDown = SendInterval;
+            CheckInterval = 5;
+            CoolDown = CheckInterval;
 
             DiscordRPC.EventHandlers eventHandlers = default;
             eventHandlers.readyCallback = (DiscordRPC.ReadyCallback)Delegate.Combine(eventHandlers.readyCallback, new DiscordRPC.ReadyCallback(ReadyCallback));
@@ -53,7 +53,7 @@ namespace CraftopiaRPC
             if (CoolDown > 0)
                 CoolDown -= Time.deltaTime;
             else {
-                CoolDown = SendInterval;
+                CoolDown = CheckInterval;
                 CheckStatus();
             }
         }
