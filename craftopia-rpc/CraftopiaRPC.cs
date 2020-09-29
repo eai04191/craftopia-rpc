@@ -61,7 +61,7 @@ namespace CraftopiaRPC
         void CheckStatus()
         {
             if (!OcGameMng.Inst) {
-                Logger.LogInfo("Not in Game");
+                // Logger.LogInfo("Not in Game");
                 SetStatus();
                 return;
             }
@@ -73,7 +73,7 @@ namespace CraftopiaRPC
                 SetStatus(CurrentState);
                 PreviousState = CurrentState.Clone();
             } else {
-                Logger.LogInfo("State is not Change. Keep Going!");
+                // Logger.LogInfo("State is not Change. Keep Going!");
             }
         }
 
