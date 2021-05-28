@@ -4,6 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>CraftopiaRPC</RootNamespace>
     <AssemblyName>CraftopiaRPC</AssemblyName>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
