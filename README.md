@@ -1,5 +1,7 @@
 # Discord Rich Presence for Craftopia
 
+![image](https://user-images.githubusercontent.com/3516343/120014047-87821a80-c01c-11eb-8205-5cd2ea943af5.png)
+
 ## Installation
 
 0. If you haven't installed [BepInEx](https://bepinex.github.io/bepinex_docs/master/index.html) yet, follow the [instructions](https://bepinex.github.io/bepinex_docs/master/articles/user_guide/installation/index.html) to install it. BepInEx will become the standard for Craftopia modding.
