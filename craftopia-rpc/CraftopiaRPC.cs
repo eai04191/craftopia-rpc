@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CraftopiaRPC
 {
-    [BepInPlugin("net.mizle.craftopiarpc", "Craftopia RPC", "1.0.1.210513")]
+    [BepInPlugin("net.mizle.craftopiarpc", "Craftopia RPC", "1.0.0.1")]
     [BepInProcess("Craftopia.exe")]
     public class CraftopiaRPC : BaseUnityPlugin
     {
