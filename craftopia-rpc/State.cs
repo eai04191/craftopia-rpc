@@ -1,6 +1,7 @@
 using Oc;
 using Oc.Maps;
 using Oc.Dungeon;
+using Oc.Network;
 
 namespace CraftopiaRPC
 {
@@ -28,8 +29,8 @@ namespace CraftopiaRPC
             PlayerCountMax = OcNetMng.MAX_PLAYER_NUM;
             PlayerCount = SingletonMonoBehaviour<OcNetMng>.Inst.ConnectPlayerNum;
             PlayState = ServerState == OcServerState.Run ? IsHost
-                ? "Multiplayer as Host"
-                : "Multiplayer as Guest"
+                ? "MP as Host"
+                : "MP as Guest"
                 : "Solo";
             DungeonID = OcPlMaster.Inst.CurrentDungeonId;
             IsDungeon = DungeonID != -1;
@@ -41,7 +42,7 @@ namespace CraftopiaRPC
             PlayerName = SingletonMonoBehaviour<OcPlCharacterManager>.Inst.SelectedCharaMakeData.Name;
             PlayerLevel = OcPlMaster.Inst.PlLevelCtrl.Level.Value;
             MapID = SingletonMonoBehaviour<OcWorldManager>.Inst.CurrentIsland.ID;
-            MapLevel = SingletonMonoBehaviour<OcWorldManager>.Inst.WorldLevel_Map;
+            MapLevel = SingletonMonoBehaviour<OcWorldManager>.Inst.IslandLevel;
         }
 
         public bool IsSameState(object obj)
